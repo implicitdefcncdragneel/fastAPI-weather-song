@@ -1,50 +1,40 @@
-import httpx
-import os
+import httpx,os
+from fastapi import HTTPException #https://fastapi.tiangolo.com/reference/apirouter/
 from utils.urls import OpenWeatherMapUrls
 
-API_KEY = os.getenv("API_KEY", "API_KEY")
+WEATHER_API_KEY = os.environ.get("OPEN_WEATHER_API_KEY")
 
-def get_geo_location(city_name : str):
-    '''
-    fetch latitude, longitude based on city_name
-    '''
-
-    #https://www.python-httpx.org/advanced/clients/
-    with httpx.Client(base_url = OpenWeatherMapUrls.BASE_URL) as client:
-        
+async def get_geo_location(city_name: str):
+    async with httpx.AsyncClient(base_url=OpenWeatherMapUrls.BASE_URL) as client:
         params_dict = {
-                        "q": city_name, 
-                        "appid": API_KEY
-                    }
-
+            "q": city_name,
+            "appid": WEATHER_API_KEY
+        }
         try:
-            response = client.get(OpenWeatherMapUrls.GEO_API["LOCATION_URL"],params = params_dict)
+            response = await client.get(OpenWeatherMapUrls.GEO_API["LOCATION_URL"], params=params_dict)
+            response.raise_for_status()
             location_json_response = response.json()
+            latitude, longitude = location_json_response[0]["lat"], location_json_response[0]["lon"]
+            return latitude, longitude
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=e.response.status_code, detail=e.response.json()["message"])
+        except Exception as e:
+            raise HTTPException(status_code=501, detail=str(e))
 
-            latitude,longitude = location_json_response[0]["lat"],location_json_response[0]["lon"]
-            
-            return [latitude, longitude]
-        except Exception as err:
-            #TODO: Handle it
-            print(f'Other error occurred: {err}')
-
-def get_weather_forecast(latitude : str,longitude : str):
-    '''
-    fetch weather forecaset
-    '''
-    with httpx.Client(base_url = OpenWeatherMapUrls.BASE_URL) as client:
-        
+async def get_current_weather(latitude: str, longitude: str):
+    async with httpx.AsyncClient(base_url=OpenWeatherMapUrls.BASE_URL) as client:
         params_dict = {
-                        "lat": latitude, 
-                        "lon": longitude,
-                        "appid": API_KEY
-                    }
-
+            "lat": latitude,
+            "lon": longitude,
+            "appid": WEATHER_API_KEY
+        }
         try:
-            response = client.get(OpenWeatherMapUrls.DATA_API["FORECAST_URL"],params = params_dict)
-            forecase_json_response = response.json()
-            #TODO:
-            return
-        except Exception as err:
-            #TODO: Handle it
-            print(f'Other error occurred: {err}')
+            response = await client.get(OpenWeatherMapUrls.DATA_API["WEATHER_URL"], params=params_dict)
+            response.raise_for_status()
+            weather_json_response = response.json()
+            weather_description = weather_json_response["weather"][0]["description"]
+            return weather_description
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=e.response.status_code, detail=e.response.json()["message"])
+        except Exception as e:
+            raise HTTPException(status_code=502, detail=str(e))
