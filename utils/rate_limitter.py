@@ -1,6 +1,8 @@
-from functools import wraps
 import time
-from utils.custom_exceptions import raise_rate_limiter_exceeded_exception
+from functools import wraps
+
+from exception.base_exception import raise_rate_limiter_exceeded_exception
+
 
 # https://www.youtube.com/watch?v=49oC1uHxJ-o&ab_channel=Monkhaus
 def rate_limited(max_calls: int, time_frame:int):

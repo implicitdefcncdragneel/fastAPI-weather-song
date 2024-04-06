@@ -1,7 +1,19 @@
-import httpx,os
-from fastapi import HTTPException,status #https://fastapi.tiangolo.com/reference/apirouter/
-from utils.custom_exceptions import raise_open_weather_api_key_error, raise_open_weather_bad_request_error, raise_open_weather_generic_error, raise_open_weather_limit_exceeded_error, raise_open_weather_not_found_error
-from utils.urls import OpenWeatherMapUrls
+import os
+
+import httpx
+from fastapi import (  # https://fastapi.tiangolo.com/reference/apirouter/
+    HTTPException,
+    status,
+)
+
+from exception.open_weather_exception import (
+    raise_open_weather_api_key_error,
+    raise_open_weather_bad_request_error,
+    raise_open_weather_generic_error,
+    raise_open_weather_limit_exceeded_error,
+    raise_open_weather_not_found_error,
+)
+from open_api_url.open_weather_map import OpenWeatherMapUrls
 
 WEATHER_API_KEY = os.environ.get("OPEN_WEATHER_API_KEY")
 
