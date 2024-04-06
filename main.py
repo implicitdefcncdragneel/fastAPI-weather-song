@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from routers.song_recommendation import router as song_router
+from routers.recommendation import router as song_router
 
 load_dotenv()
 

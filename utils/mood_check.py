@@ -1,5 +1,14 @@
 
-def check_mood_weather_match(user_mood: str, weather_description: str) -> bool:
+def check_mood_weather_match(user_mood: str, weather_description: str):
+    """Determine if the current weather matches the mood entered by the user.
+
+    Args:
+        user_mood (str): The mood entered by the user.
+        weather_description (str): The current weather description.
+
+    Returns:
+        Boolean: True If the current weather matches the mood entered by the user otherwise False
+    """
 
     mood_weather_mapping = {
         "happy": ["clear", "sun", "clouds"],
