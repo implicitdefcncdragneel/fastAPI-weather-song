@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "e89680be-eb3a-49b2-ab0c-6e7f540a738c",
+		"name": "fastAPI-weather-song",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "13507907",
+		"_collection_link": "https://dragneel-teams.postman.co/workspace/My-Workspace~2d19ea62-79a1-4c2f-832f-c1af0489fffc/collection/13507907-e89680be-eb3a-49b2-ab0c-6e7f540a738c?action=share&source=collection_link&creator=13507907"
+	},
+	"item": [
+		{
+			"name": "get_song_recommendation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/song?city_name=patna&current_mood=sun",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"song"
+					],
+					"query": [
+						{
+							"key": "city_name",
+							"value": "patna"
+						},
+						{
+							"key": "current_mood",
+							"value": "sun"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

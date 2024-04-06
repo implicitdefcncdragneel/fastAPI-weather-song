@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 
-
+# https://openweathermap.org/api/one-call-3#errors
 def raise_open_weather_bad_request_error():
     """
     Raises an HTTPException with status code 400 for OpenWeather API indicating a bad request.
