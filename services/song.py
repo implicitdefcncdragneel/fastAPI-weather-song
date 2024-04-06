@@ -12,7 +12,7 @@ from open_api_url.audio_scrobbler import AudioScrobblerUrls
 
 API_KEY = os.environ.get("AUDIO_API_KEY")
 
-async def get_song(mood: str):
+async def get_song(mood: str, base_url: str = AudioScrobblerUrls.BASE_URL, endpoint: str = AudioScrobblerUrls.v2):
     """Retrieve a list of songs based on the user's mood.
 
     Args:
@@ -21,7 +21,7 @@ async def get_song(mood: str):
     Returns:
         List[str]: An array containing names of songs from different albums.
     """
-    async with httpx.AsyncClient(base_url=AudioScrobblerUrls.BASE_URL) as client: 
+    async with httpx.AsyncClient(base_url=base_url) as client: 
         
         params_dict = {
             "method": "album.search",
@@ -30,7 +30,7 @@ async def get_song(mood: str):
             "format" : "json"
         }
         try:
-            response = await client.get(AudioScrobblerUrls.v2, params=params_dict)
+            response = await client.get(endpoint, params=params_dict)
             response.raise_for_status() #raise an exception for any responses which are not a 2xx success code.
             album_json_response = response.json()
             album_list  = album_json_response["results"]["albummatches"]["album"]

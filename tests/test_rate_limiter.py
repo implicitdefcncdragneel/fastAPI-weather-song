@@ -10,7 +10,6 @@ from utils.rate_limiter import rate_limited
 async def mock_function():
     pass
 
-# Test rate_limited decorator
 def test_rate_limited_decorator_pass():
     @rate_limited(max_calls=2, time_frame=5)
     async def mock_function_rate_limited():

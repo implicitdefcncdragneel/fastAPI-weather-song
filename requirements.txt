@@ -3,5 +3,6 @@ httpx
 isort
 coverage
 pytest
+pytest-asyncio
 python-dotenv
 uvicorn
