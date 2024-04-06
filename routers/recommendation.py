@@ -6,7 +6,7 @@ from fastapi import (  # https://fastapi.tiangolo.com/reference/apirouter/
 from services.song import get_song
 from services.weather import get_current_weather, get_geo_location
 from utils.mood_check import check_mood_weather_match
-from utils.rate_limitter import rate_limited
+from utils.rate_limiter import rate_limited
 from utils.response_schema import custom_response
 
 router = APIRouter(
