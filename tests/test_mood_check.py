@@ -1,5 +1,7 @@
 import pytest
+
 from utils.mood_check import check_mood_weather_match
+
 
 @pytest.mark.parametrize("user_mood, weather_description, expected_result", [
     ("happy", "clear sky", True),
